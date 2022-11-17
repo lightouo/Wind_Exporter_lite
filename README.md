@@ -5,6 +5,7 @@
 ### 自动根据excel数据生成用于微信推送的内容
 # requirements
 ```
+WindPy
 chinesecalendar
 pandas
 python_dateutil
