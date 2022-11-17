@@ -2,4 +2,3 @@ chinesecalendar
 pandas
 python_dateutil
 WindPy
-
