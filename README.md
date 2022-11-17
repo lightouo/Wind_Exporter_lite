@@ -3,3 +3,9 @@
 ### 可选日期：默认获取今天的数据，如果为非工作日则跳过
 ### 自动在根目录生成已配置好的基金浏览器中内容(excel格式)
 ### 自动根据excel数据生成用于微信推送的内容
+# requirements
+```
+chinesecalendar
+pandas
+python_dateutil
+```
