@@ -1,4 +1,4 @@
-chinese_calendar==1.7.2
-chinesecalendar==1.7.2
-pandas==1.4.2
-python_dateutil==2.8.2
+chinesecalendar
+pandas
+python_dateutil
+WindPy
