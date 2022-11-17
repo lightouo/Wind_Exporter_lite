@@ -26,7 +26,7 @@ def export_data_wsd(date=datetime.datetime.now().strftime('%Y-%m-%d')):
 def export_data_wss(writer, startDate="2022-07-01" ,endDate=datetime.datetime.now().strftime('%Y-%m-%d')):
     start_date_ = startDate.replace('-', '') 
     end_date_ = endDate.replace('-', '')
-    date_before_1m = (datetime.datetime.strptime(endDate, '%Y-%m-%d') - relativedelta(months=1)).strftime('%Y%m%d')
+    date_before_1m = (datetime.datetime.strptime(endDate, '%Y-%m-%d') - relativedelta(months=1) + relativedelta(days=1)).strftime('%Y%m%d')
     date_before_1y = (datetime.datetime.strptime(endDate, '%Y-%m-%d') - relativedelta(years=1) + relativedelta(days=1)).strftime('%Y%m%d')
     data_cundan = w.wss(code_cundan_str, "sec_name,return,risk_annualintervalyield,issue_date,fund_setupdate",f"annualized=0;startDate={start_date_};endDate={end_date_}")
     data_cundan_2 = w.wss(code_cundan_str, "return_std",f"annualized=1;tradeDate=20220920")
