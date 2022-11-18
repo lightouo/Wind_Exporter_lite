@@ -9,7 +9,7 @@ code_for_ETF = ['516760.OF', '516820.OF', '515700.OF', '561600.OF']
 code_cundan_str = """015645.OF,015644.OF,015826.OF,015862.OF,014437.OF,015823.OF,015648.OF,014427.OF,015822.OF,015647.OF,015875.OF,014426.OF,015864.OF,015861.OF,015646.OF,015643.OF,014430.OF,015956.OF,015825.OF,014428.OF,015827.OF,015863.OF,014429.OF,015944.OF,015955.OF,016082.OF,016063.OF,016083.OF"""
 
 def export_data_wsd(date=datetime.datetime.now().strftime('%Y-%m-%d')):
-    writer = pd.ExcelWriter('./{}.xlsx'.format(date), date_format='YYYY-MM-DD')
+    writer = pd.ExcelWriter('./output/{}.xlsx'.format(date), date_format='YYYY-MM-DD')
     data_zhai = []
     data_tongye =[]
     data_etf = []
@@ -82,8 +82,8 @@ def report_export(date=datetime.datetime.now()):
     data_ = w.wsd("000001.SH,881001.WI", "pct_chg", date.strftime("%Y-%m-%d"), date.strftime("%Y-%m-%d"), "").Data[0]
     data_ = [round(i, 2) for i in data_]
     # data_ = [1.2, -1.3]
-    data_1 = pd.read_excel(f'./{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='每日',index_col=0).round(2)
-    data_2 = pd.read_excel(f'./{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='同业',index_col=0).round(2)
+    data_1 = pd.read_excel(f'./output/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='每日',index_col=0).round(2)
+    data_2 = pd.read_excel(f'./output/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='同业',index_col=0).round(2)
     text_block_1 = f"""📍【市场指数表现】📍
 上证指数{up_or_down(data_[0])}：{abs(data_[0])}%
 万得全A{up_or_down(data_[1])}：{abs(data_[1])}%
@@ -246,7 +246,7 @@ def report_export(date=datetime.datetime.now()):
 平安基金与您携手同行
 祝晚安[月亮]
     """
-    with open(f'净报{date.strftime("%Y-%m-%d")}.txt', 'w', encoding='utf-8') as f:
+    with open(f'./output/净报{date.strftime("%Y-%m-%d")}.txt', 'w', encoding='utf-8') as f:
         f.write(data)
 if __name__ == '__main__':
     choice_data = input('请输入日期(格式为YYYY-MM-DD),不输入默认为今天:')
