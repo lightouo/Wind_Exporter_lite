@@ -79,7 +79,7 @@ def up_or_down(num):
         return '上涨📈'
 
 def report_export(date=datetime.datetime.now()):
-    data_ = w.wsd("000001.SH,881001.WI", "pct_chg", "2022-11-16", "2022-11-16", "").Data[0]
+    data_ = w.wsd("000001.SH,881001.WI", "pct_chg", date.strftime("%Y-%m-%d"), date.strftime("%Y-%m-%d"), "").Data[0]
     data_ = [round(i, 2) for i in data_]
     # data_ = [1.2, -1.3]
     data_1 = pd.read_excel(f'./{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='每日',index_col=0).round(2)
