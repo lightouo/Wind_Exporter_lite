@@ -10,7 +10,9 @@ def up_or_down(num):
 
 def report_export(date=datetime.datetime.now()):
     data_ = w.wsd("000001.SH,881001.WI", "pct_chg", date.strftime("%Y-%m-%d"), date.strftime("%Y-%m-%d"), "").Data[0]
-    data_ = [round(i, 2) for i in data_]
+    if None in data_:
+        print('Warning: 报告存在缺失数据，请检查现在数据是否已经公布!')
+    data_ = [round(i, 2) if i is not None else 0 for i in data_]
     # data_ = [1.2, -1.3]
     data_1 = pd.read_excel(f'./output/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='每日',index_col=0).round(2)
     data_2 = pd.read_excel(f'./output/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='同业',index_col=0).round(2)

@@ -139,7 +139,6 @@ class Wind_Exporter:
             args = args[1:]
         options = f'startDate={args[0]};endDate={args[1]};tradeDate={args[1]}' if len(
             args) == 2 else f'{args[0]};startDate={args[1]};endDate={args[2]};tradeDate={args[2]}'
-        print(options)
         data_ = w.wss(self.code, self.indicator, options=options, usedf=True)
         self.data.append(data_[1])
         return self
@@ -187,7 +186,7 @@ class Wind_Exporter:
                     data.columns = column_name[i]
                 except:
                     raise ValueError('列名数与数据不匹配')
-        with pd.ExcelWriter(path, datetime_format='YYYY-MM-DD') as writer:
+        with pd.ExcelWriter(path, date_format='YYYY-MM-DD',datetime_format='YYYY-MM-DD') as writer:
             for i in enumerate(self.data):
                 i[1].to_excel(writer, sheet_name=sheet_name[i[0]])
         return self

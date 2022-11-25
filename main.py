@@ -16,10 +16,20 @@ def export_data(choice_data):
     e = Wind_Exporter(code=code_for_meiri_str, indicator="sec_name,nav_date,nav,NAV_adj_return1,NAV_adj_return,return_ytd",options="annualized=0",method="wss",StartDate="before1m",EndDate=choice_data)
     e_ = Wind_Exporter(code=code_for_meiri_str, indicator="NAV_adj_return",method="wss",StartDate="before1y",EndDate=choice_data)
     a.get_data(round_=4).add_data(b, method='append',round_=4).add_data(c, method='append',round_=4).add_data(d, method='append',round_=4).add_data(e, method='append',round_=4).add_data(e_, method='concat',round_=4)
+    for i in a.data:
+        date_col = ['NAV_DATE','ISSUE_DATE','FUND_SETUPDATE']
+        for j in date_col:
+            try:
+                if j in i.columns:
+                    i[j] = i[j].astype(str)
+            except:
+                pass
+
     a.excel_export(sheet_name=['债', 'ETF', '同业', '存单', '每日'], column_name=[['证券简称', '基金净值日期','单位净值', '当期复权单位净值增长率', '近1月回报', '近3月回报', '近1年回报'],
                     ['证券简称', '基金净值日期','单位净值', '当期复权单位净值增长率', '近1周回报', '近1月回报'],['证券简称', '基金净值日期','单位净值', '当期复权单位净值增长率', '近1周回报', '近1月回报'],
                     ['证券简称', '基金净值日期','区间回报', '区间收益率', '发行日期', '基金成立日'], ['证券简称', '基金净值日期','单位净值', '当期复权单位净值增长率', '复权单位净值增长率(截止日1月前)', '今年以来回报', '复权单位净值增长率(截止日1年前)']],
                     path='./output/{}.xlsx'.format(choice_data))
+
 
 
 if __name__ == '__main__':
