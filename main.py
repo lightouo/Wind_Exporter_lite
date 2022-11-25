@@ -12,7 +12,7 @@ def export_data(choice_data):
     a = Wind_Exporter(code=code_for_zhai, indicator="sec_name,nav_date,nav,NAV_adj_return1,return_1m,return_3m,return_1y",options="annualized=1",method="wsd",EndDate=choice_data)
     b = Wind_Exporter(code=code_for_ETF, indicator="sec_name,nav_date,nav,NAV_adj_return1,return_1w,return_1m",options="annualized=1",method="wsd",EndDate=choice_data)
     c = Wind_Exporter(code="015645.OF", indicator="sec_name,nav_date,nav,NAV_adj_return1,return_1w,return_1m",options="annualized=1",method="wsd",EndDate=choice_data)
-    d = Wind_Exporter(code=code_cundan_str, indicator="sec_name,nav_date,return,risk_annualintervalyield,issue_date,fund_setupdate",options="annualized=0",method="wss",EndDate=choice_data)
+    d = Wind_Exporter(code=code_cundan_str, indicator="sec_name,nav_date,return,risk_annualintervalyield,issue_date,fund_setupdate",options="annualized=0",method="wss",StartDate="2022-07-01",EndDate=choice_data)
     e = Wind_Exporter(code=code_for_meiri_str, indicator="sec_name,nav_date,nav,NAV_adj_return1,NAV_adj_return,return_ytd",options="annualized=0",method="wss",StartDate="before1m",EndDate=choice_data)
     e_ = Wind_Exporter(code=code_for_meiri_str, indicator="NAV_adj_return",method="wss",StartDate="before1y",EndDate=choice_data)
     a.get_data(round_=4).add_data(b, method='append',round_=4).add_data(c, method='append',round_=4).add_data(d, method='append',round_=4).add_data(e, method='append',round_=4).add_data(e_, method='concat',round_=4)
