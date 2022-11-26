@@ -20,7 +20,8 @@ def report_export(date=datetime.datetime.now()):
     data_3 = pd.read_excel(f'./output/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='存单',index_col=0).round(2)
     data_4 = pd.read_excel(f'./output/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='债',index_col=0).round(2)
     cun_data = [data_2['近1周回报']['015645.OF'], data_3['区间收益率']['015645.OF']]
-    zhai_data = [data_4['近3月回报'][f'{i}'] for i in ['005754.OF', '005756.OF', '008911.OF', '008913.OF']]
+    zhai_data = [data_4['近1月回报'][f'{i}'] for i in ['005754.OF', '005756.OF']]
+    zhai_data_2 = [data_4['近3月回报'][f'{i}'] for i in ['008911.OF', '008913.OF']]
     text_block_1 = f"""📍【市场指数表现】📍
 上证指数{up_or_down(data_[0])}：{abs(data_[0])}%
 万得全A{up_or_down(data_[1])}：{abs(data_[1])}%
@@ -262,7 +263,7 @@ def report_export(date=datetime.datetime.now()):
 
 ❗平安中短债推荐产品，无申购限额❗
 
-📈A类(008911)近90天年化收益率{zhai_data[2]}%；E类（008913）近90天年化收益率{zhai_data[3]}%。
+📈A类(008911)近90天年化收益率{zhai_data_2[0]}%；E类（008913）近90天年化收益率{zhai_data_2[1]}%。
 
 🟠平安短债🟠
 
