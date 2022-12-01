@@ -7,7 +7,7 @@ code_for_ETF = ['516760.OF', '516820.OF', '515700.OF', '561600.OF']
 code_cundan_str = """015645.OF,015644.OF,015826.OF,015862.OF,014437.OF,015823.OF,015648.OF,014427.OF,015822.OF,015647.OF,015875.OF,
                         014426.OF,015864.OF,015861.OF,015646.OF,015643.OF,014430.OF,015956.OF,015825.OF,014428.OF,015827.OF,015863.OF,014429.OF,015944.OF,015955.OF,016082.OF,016063.OF,016083.OF"""
 code_for_meiri_str = """002450.OF,004827.OF,015645.OF,008694.OF,005754.OF,700003.OF,000739.OF,007935.OF,009661.OF,009878.OF,
-                        010126.OF,014460.OF,013767.OF,013687.OF,004390.OF,012475.OF,007893.OF,885001.WI"""
+                        010126.OF,014460.OF,013767.OF,013687.OF,004390.OF,012475.OF,007893.OF,011828.OF,885001.WI"""
 def export_data(choice_data):
     a = Wind_Exporter(code=code_for_zhai, indicator="sec_name,nav_date,nav,NAV_adj_return1,return_1m,return_3m,return_1y",options="annualized=1",method="wsd",EndDate=choice_data)
     b = Wind_Exporter(code=code_for_ETF, indicator="sec_name,nav_date,nav,NAV_adj_return1,return_1w,return_1m",options="annualized=1",method="wsd",EndDate=choice_data)
