@@ -175,7 +175,7 @@ class Wind_Exporter:
             else:
                 path = f'./output/{self.Date_List[0]}.xlsx'
         if sheet_name is None:
-            sheet_name = np.arange(len(self.data)) + 1
+            sheet_name = [f'sheet{i}' for i in range(len(self.data))]
         if column_name is not None:
             try:
                 _ = column_name[0][0]
@@ -186,7 +186,10 @@ class Wind_Exporter:
                     data.columns = column_name[i]
                 except:
                     raise ValueError('列名数与数据不匹配')
-        with pd.ExcelWriter(path, date_format='YYYY-MM-DD',datetime_format='YYYY-MM-DD') as writer:
+        with pd.ExcelWriter(path, date_format='YYYY-MM-DD',datetime_format='YYYY-MM-DD', engine='openpyxl') as writer:
             for i in enumerate(self.data):
                 i[1].to_excel(writer, sheet_name=sheet_name[i[0]])
+                sheet = writer.sheets[sheet_name[i[0]]]
+                for j in range(len(i[1].columns)+ 1):
+                    sheet.column_dimensions[chr(64+j+1)].width = 26
         return self
