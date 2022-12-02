@@ -16,7 +16,6 @@ def report_export(date=datetime.datetime.now()):
     # data_ = [1.2, -1.3]
     data_1 = pd.read_excel(f'./output/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='每日',index_col=0).round(2)
     data_2 = pd.read_excel(f'./output/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='同业',index_col=0).round(2)
-    
     data_3 = pd.read_excel(f'./output/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='存单',index_col=0).round(2)
     data_4 = pd.read_excel(f'./output/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='债',index_col=0).round(2)
     cun_data = [data_2['近1周回报']['015645.OF'], data_3['区间收益率']['015645.OF']]

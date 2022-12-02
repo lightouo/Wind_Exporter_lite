@@ -2,7 +2,7 @@ import xlwings as xw
 import datetime as dt
 from WdpCore import Wind_Exporter
 
-def bond_report():
+def bond_report(date = dt.datetime.today()):
     code_for_zhai = ['005754.OF', '005756.OF', '007935.OF', '007936.OF']
     info = [
     """购买信息：
@@ -16,7 +16,7 @@ def bond_report():
 
 
     # 1. 获取数据
-    a = Wind_Exporter(code=code_for_zhai, indicator="sec_name,nav_date,nav,NAV_adj_return1,return_1y",options="annualized=1",method="wsd",StartDate="-21TD")
+    a = Wind_Exporter(code=code_for_zhai, indicator="sec_name,nav_date,nav,NAV_adj_return1,return_1y",options="annualized=1",method="wsd",StartDate="ED-21TD",EndDate=date.strftime("%Y-%m-%d"))
     a.get_data()
     data = []
     for i,code in enumerate(code_for_zhai):
@@ -38,14 +38,14 @@ def bond_report():
         sheet_["A4"].options(index=False, header=False).value = data[i_][0].sort_values(by='NAV_DATE', ascending=False).loc[:,["NAV_DATE","NAV","NAV_ADJ_RETURN1"]]
         sheet_["F4"].options(index=False, header=False).value = data[i_][0].sort_values(by='NAV_DATE', ascending=False).loc[:,["RETURN_1Y"]]
         sheet_["A1"].value = f"{data[i_][1]}（{data[i_][2].replace('.OF','')}）收益情况播报"
-        sheet_["A26"].value = info[i]
+        sheet_["A26"].value = info[i_]
 
         sheet_["A31"].options(index=False, header=False).value = data[i_+1][0].sort_values(by='NAV_DATE', ascending=False).loc[:,["NAV_DATE","NAV","NAV_ADJ_RETURN1"]]
         sheet_["F31"].options(index=False, header=False).value = data[i_+1][0].sort_values(by='NAV_DATE', ascending=False).loc[:,["RETURN_1Y"]]
         sheet_["A28"].value = f"{data[i_+1][1]}（{data[i_+1][2].replace('.OF','')}）收益情况播报"
-        sheet_["A53"].value = info[i+1]
+        sheet_["A53"].value = info[i_+1]
         sheet_.copy()
     sheet_.delete()
-    book.save(f"./output/债券基金收益情况播报_{dt.datetime.now().strftime('%Y-%m-%d')}.xlsx")
+    book.save(f"./output/债券基金收益情况播报_{date.strftime('%Y-%m-%d')}.xlsx")
     invisible_app.quit()
     print("数据写入完毕")

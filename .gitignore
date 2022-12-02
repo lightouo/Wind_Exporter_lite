@@ -153,4 +153,5 @@ cython_debug/
 
 output/*.txt
 output/*.xlsx
+output/*.xlsm
 tmp/
