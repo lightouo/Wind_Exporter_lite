@@ -59,7 +59,7 @@ def tongcun_rank_report(date=dt.datetime.now()):
     book.sheets[0]["A3"].options(index=False,header=False).value = cun_data_
     i= int(book.sheets[0]["B34"].value)
     book.sheets[0][f"A{i}:E{i}"].api.Interior.Color = 65535
-    book.sheets[0]["A1"].value = f"全市场同存排名({date.strftime('%Y年%m月%d日')})"
+    book.sheets[0]["A1"].value = f"全市场同存排名({date.strftime('%Y')}年{date.strftime('%m')}月{date.strftime('%d')}日)"
 
     book.save(f'./output/全市场同存排名{date.strftime("%Y-%m-%d")}.xlsx')
     time.sleep(3)
