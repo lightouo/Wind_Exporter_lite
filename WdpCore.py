@@ -102,12 +102,10 @@ class Wind_Exporter:
                     multi_data.append(data_[1])
                 self.data.append(pd.concat(multi_data, axis=0))
             else:
-                multi_data = []
                 for i in self.code:
                     data_ = w.wsd(i, self.indicator, self.StartDate,
                                   self.EndDate, options=self.options, usedf=True)
-                    multi_data.append(data_[1])
-                self.data.append(multi_data)
+                    self.data.append(data_[1])
         else:
             for date in self.Date_List:
                 multi_data = []

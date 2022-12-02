@@ -1,7 +1,9 @@
-from wdpcore import Wind_Exporter
+from WdpCore import Wind_Exporter
 from datetime import datetime, timedelta
 from chinese_calendar import is_holiday
 from report_exp import report_export
+from zhai_report import bond_report
+
 code_for_zhai = ['005754.OF', '005756.OF', '008911.OF', '008913.OF', '007935.OF', '007936.OF', '008696.OF', '004827.OF', '006851.OF']
 code_for_ETF = ['516760.OF', '516820.OF', '515700.OF', '561600.OF']
 code_cundan_str = """015645.OF,015644.OF,015826.OF,015862.OF,014437.OF,015823.OF,015648.OF,014427.OF,015822.OF,015647.OF,015875.OF,
@@ -56,6 +58,11 @@ if __name__ == '__main__':
         print(f'正在获取{choice_data_}的数据...')
         export_data(choice_data_)
         print('数据获取完成')
+        
         print('正在生成报告...')
         report_export(choice_data)
         print('报告生成完成')
+
+        print('正在生成债券收益情况表...')
+        bond_report()
+        print('债券收益情况表生成完成')
