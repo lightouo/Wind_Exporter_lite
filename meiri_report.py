@@ -18,5 +18,5 @@ def meiri_report(date=dt.datetime.now()):
     book.macro('Automatic.存单').run()
     book.macro('Automatic.ETF').run()
     book.macro('Automatic.Copy').run()
-    book.save(f'./output/每日播报{date.strftime("%Y-%m-%d")}.xlsm')
+    book.save(f'./output/每日播报{date.strftime("%Y-%m-%d")}.xlsx')
     app1.quit()
