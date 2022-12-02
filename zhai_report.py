@@ -1,6 +1,9 @@
 import xlwings as xw
 import datetime as dt
+import time
 from WdpCore import Wind_Exporter
+from meiri_report import quit_app,get_picture
+
 
 def bond_report(date = dt.datetime.today()):
     code_for_zhai = ['005754.OF', '005756.OF', '007935.OF', '007936.OF']
@@ -29,7 +32,7 @@ def bond_report(date = dt.datetime.today()):
     print("数据获取完毕")
 
     # 2. 写入Excel
-    invisible_app = xw.App(visible=False)
+    invisible_app = xw.App(visible=False,add_book=False)
     book = invisible_app.books.open('./template/zhai2_tem.xlsx')
     for i in range(len(data)//2):
         i_ = i*2
@@ -45,7 +48,9 @@ def bond_report(date = dt.datetime.today()):
         sheet_["A28"].value = f"{data[i_+1][1]}（{data[i_+1][2].replace('.OF','')}）收益情况播报"
         sheet_["A53"].value = info[i_+1]
         sheet_.copy()
+        time.sleep(3)
+        get_picture(invisible_app,sheet_,"A1:F55",f"{date.strftime('%Y-%m-%d')}{data[i_][1]}")
     sheet_.delete()
     book.save(f"./output/债券基金收益情况播报_{date.strftime('%Y-%m-%d')}.xlsx")
-    invisible_app.quit()
+    quit_app()
     print("数据写入完毕")

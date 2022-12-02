@@ -2,7 +2,8 @@ from WdpCore import Wind_Exporter
 from datetime import datetime, timedelta
 from chinese_calendar import is_holiday
 from report_exp import report_export
-from meiri_report import meiri_report
+from meiri_report import meiri_report,tongcun_rank_report,tongcun_report
+
 from zhai_report import bond_report
 
 code_for_zhai = ['005754.OF', '005756.OF', '008911.OF', '008913.OF', '007935.OF', '007936.OF', '008696.OF', '004827.OF', '006851.OF']
@@ -67,6 +68,16 @@ if __name__ == '__main__':
         print("正在生成每日报告...")
         meiri_report(choice_data)
         print("每日报告生成完成")
+
+
+        print("正在生成同存排名...")
+        tongcun_rank_report(choice_data)
+        print("同存排名生成完成")
+
+        print("正在生成同存收益率...")
+        tongcun_report(choice_data)
+        print("正在生成同存收益率...")
+
 
         print('正在生成债券收益情况表...')
         bond_report(choice_data)

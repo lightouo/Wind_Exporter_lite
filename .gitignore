@@ -154,4 +154,6 @@ cython_debug/
 output/*.txt
 output/*.xlsx
 output/*.xlsm
+output/*.png
+output/pic/*.png
 tmp/
