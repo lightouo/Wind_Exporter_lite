@@ -1,6 +1,16 @@
 from WindPy import w
 import pandas as pd
 import datetime
+from decimal import Decimal,ROUND_HALF_UP
+
+
+
+def round_half_up(number, ndigits):
+    if isinstance(number, list):
+        return [Decimal(str(num)).quantize(Decimal('0.' + '0' * ndigits), rounding=ROUND_HALF_UP) for num in number]
+    if isinstance(number, float):
+        return Decimal(str(number)).quantize(Decimal('0.' + '0' * ndigits), rounding=ROUND_HALF_UP)
+
 
 def up_or_down(num):
     if num < 0:
@@ -8,19 +18,18 @@ def up_or_down(num):
     else:
         return '上涨📈'
 
-def report_export(date=datetime.datetime.now()):
+def report_export(date=datetime.datetime.now(), path='./output'):
     data_ = w.wsd("000001.SH,881001.WI", "pct_chg", date.strftime("%Y-%m-%d"), date.strftime("%Y-%m-%d"), "").Data[0]
     if None in data_:
         print('Warning: 报告存在缺失数据，请检查现在数据是否已经公布!')
     data_ = [round(i, 2) if i is not None else 0 for i in data_]
     # data_ = [1.2, -1.3]
-    data_1 = pd.read_excel(f'./output/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='每日',index_col=0).round(2)
-    data_2 = pd.read_excel(f'./output/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='同业',index_col=0).round(2)
-    data_3 = pd.read_excel(f'./output/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='存单',index_col=0).round(2)
-    data_4 = pd.read_excel(f'./output/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='债',index_col=0).round(2)
-    cun_data = [data_2['近1周回报']['015645.OF'], data_3['区间收益率']['015645.OF']]
-    zhai_data = [data_4['近1年回报'][f'{i}'] for i in ['005754.OF', '005756.OF']]
-    zhai_data_2 = [data_4['近1年回报'][f'{i}'] for i in ['007935.OF', '007936.OF']]
+    data_1 = pd.read_excel(f'{path}/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='每日',index_col=0).round(2)
+    data_2 = pd.read_excel(f'{path}/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='同业',index_col=0).round(2)
+    data_3 = pd.read_excel(f'{path}/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='存单',index_col=0).round(2)
+    data_4 = pd.read_excel(f'{path}/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='债',index_col=0).round(2)
+
+# 共享文字内容
     text_block_1 = f"""📍【市场指数表现】📍
 上证指数{up_or_down(data_[0])}：{abs(data_[0])}%
 万得全A{up_or_down(data_[1])}：{abs(data_[1])}%
@@ -53,6 +62,18 @@ def report_export(date=datetime.datetime.now()):
 本日{up_or_down(data_1['当期复权单位净值增长率']['014460.OF'])}：{abs(data_1['当期复权单位净值增长率']['014460.OF'])}%
 近一月{up_or_down(data_1['复权单位净值增长率(截止日1月前)']['014460.OF'])}：{abs(data_1['复权单位净值增长率(截止日1月前)']['014460.OF'])}%
 """
+
+
+# 额外内容
+    cun_data = [data_2['近1周回报']['015645.OF'], data_3['区间收益率']['015645.OF']]
+    cun_data = round_half_up(cun_data, 2)
+    zhai_data = [data_4['近1年回报'][f'{i}'] for i in ['005754.OF', '005756.OF']]
+    zhai_data = round_half_up(zhai_data, 2)
+    zhai_data_2 = [data_4['近1年回报'][f'{i}'] for i in ['007935.OF', '007936.OF']]
+    zhai_data_2 = round_half_up(zhai_data_2, 2)
+
+
+# 主体内容框架
     data = f"""🏅 净值播报{date.strftime('%m.%d')}
 
 {text_block_1}
@@ -288,5 +309,5 @@ def report_export(date=datetime.datetime.now()):
 
 
     """
-    with open(f'./output/净报{date.strftime("%Y-%m-%d")}.txt', 'w', encoding='utf-8') as f:
+    with open(f'{path}/净报{date.strftime("%Y-%m-%d")}.txt', 'w', encoding='utf-8') as f:
         f.write(data)

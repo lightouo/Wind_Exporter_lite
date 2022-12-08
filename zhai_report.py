@@ -5,7 +5,7 @@ from WdpCore import Wind_Exporter
 from meiri_report import quit_app,get_picture
 
 
-def bond_report(date = dt.datetime.today()):
+def bond_report(date = dt.datetime.today(), path='./output'):
     code_for_zhai = ['005754.OF', '005756.OF', '007935.OF', '007936.OF']
     info = [
     """购买信息：
@@ -29,8 +29,6 @@ def bond_report(date = dt.datetime.today()):
         b.RETURN_1Y = (b.RETURN_1Y/100).round(4)
         data.append([b,name,code])
 
-    print("数据获取完毕")
-
     # 2. 写入Excel
     invisible_app = xw.App(visible=False,add_book=False)
     book = invisible_app.books.open('./template/zhai2_tem.xlsx')
@@ -49,8 +47,11 @@ def bond_report(date = dt.datetime.today()):
         sheet_["A53"].value = info[i_+1]
         sheet_.copy()
         time.sleep(3)
-        get_picture(invisible_app,sheet_,"A1:F55",f"{date.strftime('%Y-%m-%d')}{data[i_][1]}")
+        try:
+            get_picture(invisible_app,sheet_,"A1:F55",f"{date.strftime('%Y-%m-%d')}{data[i_][1]}",path)
+        except:
+            print("-----图片生成失败-----", "请检查是否有未关闭的Excel文件(包括进程)")
+
     sheet_.delete()
-    book.save(f"./output/债券基金收益情况播报_{date.strftime('%Y-%m-%d')}.xlsx")
+    book.save(f"{path}/债券基金收益情况播报_{date.strftime('%Y-%m-%d')}.xlsx")
     quit_app()
-    print("数据写入完毕")
