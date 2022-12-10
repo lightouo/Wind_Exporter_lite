@@ -33,6 +33,7 @@ def meiri_report(date=dt.datetime.now(), path='./output/'):
     book.macro('Automatic.存单').run()
     book.macro('Automatic.ETF').run()
     book.macro('Automatic.Copy').run()
+    book.macro('Automatic.Until_date').run()
 
     for i in range(3,13):
         book.sheets[i]["B1"].value = f"优选基金&售后跟踪({date.strftime('%Y-%m-%d')})"
