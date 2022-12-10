@@ -141,10 +141,10 @@ class Wind_Exporter:
         self.data.append(data_[1])
         return self
 
-    def add_data(self, we_obj, method: Literal['concat', 'append'] = 'concat', round_=None):
+    def add_data(self, we_obj, method: Literal['concat', 'append'] = 'concat', round_=None, axis=1):
         if method == 'concat':
             we_obj.get_data(round_=round_)
-            self.data[-1] = pd.concat([self.data[-1], we_obj.data[-1]], axis=1)
+            self.data[-1] = pd.concat([self.data[-1], we_obj.data[-1]], axis=axis)
         elif method == 'append':
             we_obj.get_data(round_=round_)
             for i in we_obj.data:
