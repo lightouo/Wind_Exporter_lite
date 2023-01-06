@@ -28,7 +28,7 @@ def report_export(date=datetime.datetime.now(), path='./output'):
     data_2 = pd.read_excel(f'{path}/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='同业',index_col=0).round(2)
     data_3 = pd.read_excel(f'{path}/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='存单',index_col=0).round(2)
     data_4 = pd.read_excel(f'{path}/{date.strftime("%Y-%m-%d")}.xlsx',sheet_name='债',index_col=0).round(2)
-
+    date_only5 = datetime.datetime.strptime(data_1["基金净值日期"]['015510.OF'], "%Y-%m-%d")
 # 共享文字内容
     text_block_1 = f"""📍【市场指数表现】📍
 上证指数{up_or_down(data_[0])}：{abs(data_[0])}%
@@ -63,8 +63,8 @@ def report_export(date=datetime.datetime.now(), path='./output'):
 近一月{up_or_down(data_1['复权单位净值增长率(截止日1月前)']['014460.OF'])}：{abs(data_1['复权单位净值增长率(截止日1月前)']['014460.OF'])}%
 """
     text_block_9 = f"""🌼平安价值领航-何杰（015510）
-本日{up_or_down(data_1['当期复权单位净值增长率']['015510.OF'])}：{abs(data_1['当期复权单位净值增长率']['015510.OF'])}%
-近一月{up_or_down(data_1['复权单位净值增长率(截止日1月前)']['015510.OF'])}：{abs(data_1['复权单位净值增长率(截止日1月前)']['015510.OF'])}%
+本日{up_or_down(data_1['当期复权单位净值增长率']['015510.OF'])}：{abs(data_1['当期复权单位净值增长率']['015510.OF'])}%（数据截至{date_only5.strftime("%m")}月{date_only5.strftime("%d")}日）
+近一月{up_or_down(data_1['复权单位净值增长率(截止日1月前)']['015510.OF'])}：{abs(data_1['复权单位净值增长率(截止日1月前)']['015510.OF'])}%（数据截至{date_only5.strftime("%m")}月{date_only5.strftime("%d")}日）
 """
 
 # 额外内容
