@@ -144,7 +144,13 @@ class Wind_Exporter:
     def add_data(self, we_obj, method: Literal['concat', 'append'] = 'concat', round_=None, axis=1):
         if method == 'concat':
             we_obj.get_data(round_=round_)
-            self.data[-1] = pd.concat([self.data[-1], we_obj.data[-1]], axis=axis)
+            if len(we_obj.data) == 1:
+                self.data[-1] = pd.concat([self.data[-1], we_obj.data[0]], axis=axis)
+            elif len(we_obj.data) == len(self.data):
+                for i in range(len(we_obj.data)):
+                    self.data[i] = pd.concat([self.data[i], we_obj.data[i]], axis=axis)
+            else:
+                raise ValueError('data length must be equal or 1')
         elif method == 'append':
             we_obj.get_data(round_=round_)
             for i in we_obj.data:
